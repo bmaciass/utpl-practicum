@@ -1,0 +1,15 @@
+services:
+  pg:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "6000:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: utpl_practicum
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./pg-extension-uuid-ossp.sh:/docker-entrypoint-initdb.d/pg-extension-uuid-ossp.sh
+volumes:
+  pgdata: {}

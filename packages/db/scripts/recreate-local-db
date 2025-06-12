@@ -1,0 +1,5 @@
+#!/bin/sh
+psql -d "postgres://root:root@127.0.0.1:6000/postgres" -c "DROP DATABASE utpl_practicum;"
+psql -d "postgres://root:root@127.0.0.1:6000/postgres" -c "CREATE DATABASE utpl_practicum;"
+
+pnpm --filter db migrate
