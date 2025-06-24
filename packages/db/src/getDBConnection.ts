@@ -1,36 +1,21 @@
+import postgres from 'postgres'
 import * as schema from './schema'
 
-import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres'
-import pg from 'pg'
+// FIXME: Use node-postgres instead
+// See https://github.com/cloudflare/workers-sdk/issues/9668 and https://github.com/brianc/node-postgres/issues/3493
 
-const { Client } = pg
-
-export function getDrizzleInstance(databaseUrl?: string) {
-  const connectionString = process.env.DATABASE_URL ?? databaseUrl
-
-  if (!connectionString) throw new Error('no database url set')
-
-  const client = new Client({
-    connectionString,
-  })
-
-  const db = drizzle(client, { schema })
-
-  return db
-}
+import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
 export async function getDBConnection(databaseUrl?: string) {
   const connectionString = process.env.DATABASE_URL ?? databaseUrl
 
   if (!connectionString) throw new Error('no database url set')
 
-  const client = new Client({
-    connectionString,
+  const db = drizzle({
+    client: postgres(connectionString, { prepare: false }),
+    schema,
   })
-  await client.connect()
-  const db = drizzle(client, { schema })
-  return { db, client }
+  return db
 }
 
-export type Db = NodePgDatabase<typeof schema>
-export type Client = pg.Client
+export type Db = PostgresJsDatabase<typeof schema>

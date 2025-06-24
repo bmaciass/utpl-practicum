@@ -4,6 +4,7 @@
 // If you want to make changes, edit the file scripts/generate.ts
 
 // exporting tables
+export * from './tables/institution'
 export * from './tables/person'
 export * from './tables/user'
 

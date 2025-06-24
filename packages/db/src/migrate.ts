@@ -4,6 +4,7 @@ import { getDBConnection } from './getDBConnection'
 
 async function main() {
   const { db, client } = await getDBConnection()
+  await db.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
   await db.execute('select * from uuid_generate_v4();')
   // This will run migrations on the database, skipping the ones already applied
   await migrate(db, {

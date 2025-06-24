@@ -1,0 +1,33 @@
+{
+	"name": "@sigep/api",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"gen": "tsx src/schema/pothos/printSchema.ts",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.8.19",
+		"tsx": "^4.20.1",
+		"typescript": "^5.5.2",
+		"vitest": "~3.2.0",
+		"wrangler": "^4.21.0"
+	},
+	"dependencies": {
+		"@pothos/core": "^4.7.0",
+		"@pothos/plugin-scope-auth": "^4.1.5",
+		"@sigep/db": "workspace:*",
+		"@types/lodash-es": "^4.17.12",
+		"decimal.js": "^10.5.0",
+		"drizzle-orm": "^0.44.2",
+		"graphql": "^16.11.0",
+		"graphql-scalars": "^1.24.2",
+		"graphql-yoga": "^5.13.5",
+		"jose": "^6.0.11",
+		"lodash-es": "^4.17.21"
+	}
+}
