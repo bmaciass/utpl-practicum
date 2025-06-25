@@ -12,5 +12,10 @@
   "packageManager": "pnpm@10.6.1",
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "pg-cloudflare@1.2.6": "patches/pg-cloudflare@1.2.6.patch"
+    }
   }
 }

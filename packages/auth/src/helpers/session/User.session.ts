@@ -2,7 +2,7 @@ import { type Db, User, type UserRecord } from '@sigep/db'
 import { eq } from 'drizzle-orm'
 import { isEmpty } from 'lodash-es'
 import { SessionManager } from './SessionManager'
-import { UserPasswordValidator } from './UserPasswordValidator'
+import { UserPasswordManager } from './UserPasswordManager'
 
 type LoginMethod = 'password'
 
@@ -40,7 +40,7 @@ export class UserSession {
     username: string,
     password: string,
   ) {
-    const validator = new UserPasswordValidator({
+    const validator = new UserPasswordManager({
       password,
       username: username,
     })

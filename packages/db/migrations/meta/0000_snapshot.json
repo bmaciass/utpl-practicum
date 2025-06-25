@@ -1,9 +1,123 @@
 {
-  "id": "d49a578d-a022-4c37-9fd4-c84dcbb28308",
+  "id": "b0df8976-6f4a-41f7-9fac-539a58a057b9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.Institution": {
+      "name": "Institution",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uid": {
+          "name": "uid",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "area": {
+          "name": "area",
+          "type": "InstitutionArea",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "InstitutionGovernanceLevel",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdBy": {
+          "name": "createdBy",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updatedBy": {
+          "name": "updatedBy",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "Institution_createdBy_Person_uid_fk": {
+          "name": "Institution_createdBy_Person_uid_fk",
+          "tableFrom": "Institution",
+          "tableTo": "Person",
+          "columnsFrom": [
+            "createdBy"
+          ],
+          "columnsTo": [
+            "uid"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "Institution_updatedBy_Person_uid_fk": {
+          "name": "Institution_updatedBy_Person_uid_fk",
+          "tableFrom": "Institution",
+          "tableTo": "Person",
+          "columnsFrom": [
+            "updatedBy"
+          ],
+          "columnsTo": [
+            "uid"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "Institution_uid_unique": {
+          "name": "Institution_uid_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "uid"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.Person": {
       "name": "Person",
       "schema": "",
@@ -50,8 +164,7 @@
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": false
         },
         "active": {
           "name": "active",
@@ -178,7 +291,22 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.InstitutionGovernanceLevel": {
+      "name": "InstitutionGovernanceLevel",
+      "schema": "public",
+      "values": [
+        "nacional"
+      ]
+    },
+    "public.InstitutionArea": {
+      "name": "InstitutionArea",
+      "schema": "public",
+      "values": [
+        "educacion"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

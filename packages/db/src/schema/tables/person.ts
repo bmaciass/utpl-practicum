@@ -17,10 +17,7 @@ export const Person = pgTable('Person', {
     .default(sql`uuid_generate_v4()`)
     .notNull(),
   createdAt: timestamp({ withTimezone: false }).defaultNow().notNull(),
-  updatedAt: timestamp({ withTimezone: false })
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
+  updatedAt: timestamp({ withTimezone: false }).$onUpdate(() => new Date()),
   active: boolean().default(true).notNull(),
 })
 

@@ -14,12 +14,16 @@
 		"enabled": true
 	},
 	"vars": {
-		"DATABASE_URL": "postgres://root:root@127.0.0.1:6000/utpl_practicum"
+		"DATABASE_URL": "postgres://root:root@127.0.0.1:6000/utpl_practicum",
+		"PRIVATE_JWK": "{\"key_ops\":[\"sign\"],\"ext\":true,\"crv\":\"Ed25519\",\"d\":\"c1gkkvWRMaDKPKG8C7Zwp--Zvov1O3qj05cbdr5BEUo\",\"x\":\"d0giNKtlIrSFkNsDmF4lZiynvxKlJVxGmPXaeW5rqgc\",\"kty\":\"OKP\"}",
+		"PUBLIC_JWK": "{\"key_ops\":[\"verify\"],\"ext\":true,\"crv\":\"Ed25519\",\"x\":\"d0giNKtlIrSFkNsDmF4lZiynvxKlJVxGmPXaeW5rqgc\",\"kty\":\"OKP\"}"
 	},
 	"env": {
 		"production": {
 			"vars": {
-				"DATABASE_URL": ""
+				"DATABASE_URL": "",
+				"PRIVATE_JWK": "",
+				"PUBLIC_JWK": ""
 			}
 		}
 	}

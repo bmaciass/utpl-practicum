@@ -2,7 +2,7 @@ import { pbkdf2Sync, randomBytes } from 'node:crypto'
 
 const ITERATIONS = 10000
 
-export class UserPasswordValidator {
+export class UserPasswordManager {
   protected username: string
   protected password: string
 

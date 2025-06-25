@@ -32,7 +32,8 @@
 		/* Skip type checking all .d.ts files. */
 		"skipLibCheck": true,
 		"types": [
-			"./worker-configuration.d.ts"
+			"./worker-configuration.d.ts",
+			"node"
 		],
 		"paths": {
 			"~/*": [
@@ -41,7 +42,7 @@
 		}
 	},
 	"exclude": [
-		"test"
+		"src/test/**/*"
 	],
 	"include": [
 		"worker-configuration.d.ts",

@@ -2,10 +2,12 @@
 	"name": "@sigep/auth",
 	"version": "0.0.0",
 	"private": true,
+	"main": "./src/index.ts",
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"gen": "tsx scripts/generate.ts",
+		"gen:jwk": "tsx scripts/generate-jwk.ts",
 		"start": "wrangler dev",
 		"test": "vitest",
 		"cf-typegen": "wrangler types"
@@ -16,7 +18,7 @@
 		"tsx": "^4.20.1",
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
-		"wrangler": "^4.21.0"
+		"wrangler": "4.21.2"
 	},
 	"dependencies": {
 		"@pothos/core": "^4.7.0",

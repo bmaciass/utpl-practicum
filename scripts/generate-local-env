@@ -1,0 +1,4 @@
+#!/bin/sh
+rm -rf .env
+touch .env
+echo "DATABASE_URL=postgres://root:root@127.0.0.1:6000/utpl_practicum" > .env

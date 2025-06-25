@@ -1,9 +1,11 @@
+import { env } from 'cloudflare:workers'
+
 export function getJWKS() {
-  if (!process.env.PRIVATE_JWK) throw new Error('private jwk env not set')
-  if (!process.env.PUBLIC_JWK) throw new Error('public jwk env not set')
+  if (!env.PRIVATE_JWK) throw new Error('private jwk env not set')
+  if (!env.PUBLIC_JWK) throw new Error('public jwk env not set')
 
   return {
-    privateJWK: process.env.PRIVATE_JWK,
-    publicJWK: process.env.PUBLIC_JWK,
+    privateJWK: env.PRIVATE_JWK,
+    publicJWK: env.PUBLIC_JWK,
   }
 }

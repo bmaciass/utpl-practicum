@@ -1,5 +1,6 @@
-import type { Db } from '@sigep/db'
+import type { Client, Db } from '@sigep/db'
 
 export type AppContext = {
+  client: Client
   db: Db
 }
