@@ -10,27 +10,9 @@ export * from './scalars/Decimal'
 export * from './inputs/FilterInputs'
 
 // exporting objects
-export * from './objects/Building'
-export * from './objects/City'
-export * from './objects/Country'
-export * from './objects/Organization'
-export * from './objects/Person'
-export * from './objects/Residence'
-export * from './objects/Resident'
-export * from './objects/State'
-export * from './objects/Staff'
+export * from './objects/Institution'
 
 // exporting queries
-export * from './queries/city/list'
-export * from './queries/residence/list'
-export * from './queries/residence/root'
-export * from './queries/resident/list'
-export * from './queries/resident/root'
+export * from './queries/institution/list'
 
 // exporting mutations
-export * from './mutations/auth/login'
-export * from './mutations/auth/refresh'
-export * from './mutations/auth/root'
-export * from './mutations/residence/create'
-export * from './mutations/residence/root'
-export * from './mutations/residence/types'

@@ -1,0 +1,3 @@
+#!/bin/sh
+pnpm tsx scripts/generate-types.ts
+pnpm tsx src/schema/pothos/printSchema.ts

@@ -1,5 +1,5 @@
 import type { Db, Client } from '@sigep/db'
-import type { JWTAccessTokenPayload } from '~/helpers/session/types'
+import type { JWTAccessTokenPayload } from '@sigep/auth'
 
 export type AppContext = {
   db: Db

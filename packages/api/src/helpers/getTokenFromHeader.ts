@@ -1,7 +1,6 @@
 import type { AppContext } from '~/schema/pothos/context'
-import { JWTSigner } from '~/helpers/session/JWTSigner'
-import type { JWTAccessTokenPayload } from '~/helpers/session/types'
 import { getJWKS } from '~/config/env'
+import { JWTSigner, type JWTAccessTokenPayload } from '@sigep/auth'
 
 export async function getTokenFromHeader(
   request: Request,

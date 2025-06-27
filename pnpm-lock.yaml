@@ -25,6 +25,9 @@ importers:
       '@pothos/plugin-scope-auth':
         specifier: ^4.1.5
         version: 4.1.5(@pothos/core@4.7.0(graphql@16.11.0))(graphql@16.11.0)
+      '@sigep/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@sigep/db':
         specifier: workspace:*
         version: link:../db

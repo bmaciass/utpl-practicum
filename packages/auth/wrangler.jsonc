@@ -5,13 +5,16 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "auth",
+	"main": "src/app/worker.ts",
+	"compatibility_date": "2025-06-20",
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
-	"main": "src/app/worker.ts",
-	"compatibility_date": "2025-06-20",
 	"observability": {
 		"enabled": true
+	},
+	"dev": {
+		"port": 6001
 	},
 	"vars": {
 		"DATABASE_URL": "postgres://root:root@127.0.0.1:6000/utpl_practicum",

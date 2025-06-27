@@ -12,9 +12,9 @@ import { DecimalResolver } from './types/scalars/Decimal'
 
 const builder = new SchemaBuilder<{
   Context: AppContext
+  DefaultFieldNullability: false
   AuthScopes: {
-    public: boolean
-    admin: boolean
+    authenticated: boolean
   }
   Scalars: {
     JSON: {
@@ -36,14 +36,13 @@ const builder = new SchemaBuilder<{
     }
   }
 }>({
+  defaultFieldNullability: false,
   plugins: [ScopeAuthPlugin],
   scopeAuth: {
-    unauthorizedError: (parent, context, info, result) =>
-      new Error('Not authorized'),
+    unauthorizedError: () => 'Not authorized',
     authScopes: async (context) => {
       return {
-        public: isNil(context.token),
-        admin: !isNil(context.token),
+        authenticated: !isNil(context.token),
       }
     },
   },
@@ -56,6 +55,5 @@ builder.addScalarType('DateTime', DateTimeISOResolver)
 
 // always required since this "empty" query is the root query
 builder.queryType({})
-builder.mutationType({})
 
 export default builder

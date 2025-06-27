@@ -6,6 +6,6 @@ const schemaAsString = printSchema(lexicographicSortSchema(schema))
 
 // run from package root
 writeFileSync(
-  `${__dirname}/../shared/graphql/api-schema.graphql`,
+  `${__dirname}/../../../../shared/graphql/api-schema.graphql`,
   schemaAsString,
 )
