@@ -55,5 +55,6 @@ builder.addScalarType('DateTime', DateTimeISOResolver)
 
 // always required since this "empty" query is the root query
 builder.queryType({})
+builder.mutationType({})
 
 export default builder

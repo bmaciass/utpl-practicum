@@ -36,5 +36,8 @@ export default defineConfig({
   },
   build: {
     minify: true,
+    rollupOptions: {
+      external: ['cloudflare:workers', 'cloudflare:sockets'], // needed for compilation
+    },
   },
 })

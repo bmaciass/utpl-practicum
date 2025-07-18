@@ -4,9 +4,9 @@
 	"private": true,
 	"main": "./src/index.ts",
 	"scripts": {
+		"codegen": "./scripts/generate",
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
-		"gen": "tsx scripts/generate.ts",
 		"gen:jwk": "tsx scripts/generate-jwk.ts",
 		"start": "wrangler dev",
 		"test": "vitest",

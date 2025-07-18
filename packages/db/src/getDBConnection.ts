@@ -6,12 +6,8 @@ import { Client } from 'pg'
 
 import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres'
 
-export async function getDBConnection(databaseUrl?: string) {
-  const connectionString = process.env.DATABASE_URL ?? databaseUrl
-
-  if (!connectionString) throw new Error('no database url set')
-
-  const client = new Client(connectionString)
+export async function getDBConnection(databaseUrl: string) {
+  const client = new Client(databaseUrl)
 
   const db = drizzle({
     client,

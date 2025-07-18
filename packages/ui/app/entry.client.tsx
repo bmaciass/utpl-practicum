@@ -4,15 +4,21 @@
  * For more information, see https://remix.run/file-conventions/entry.client
  */
 
+import { InMemoryCache } from "@apollo/client/cache/index.js";
+import { ApolloClient, HttpLink } from "@apollo/client/core/index.js";
+import { ApolloProvider } from "@apollo/client/react/index.js";
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
+import { apiClient } from './apollo/apiClient'
 
 startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
-      <RemixBrowser />
+      <ApolloProvider client={apiClient}>
+        <RemixBrowser />
+      </ApolloProvider>
     </StrictMode>
   );
 });

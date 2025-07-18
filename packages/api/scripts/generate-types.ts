@@ -6,7 +6,7 @@ import type { Dirent } from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-const DIRECTORIES = ['scalars', 'inputs', 'objects', 'queries', 'mutations']
+const DIRECTORIES = ['scalars', 'inputs', 'objects', 'queries', 'mutations', 'enums']
 
 const ROOT_DIR = path.resolve(__dirname, '../')
 const TYPEDEFS_DIR = path.resolve(ROOT_DIR, 'src/schema/pothos/types')

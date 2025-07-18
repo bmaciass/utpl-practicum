@@ -14,5 +14,14 @@ export * from './objects/Institution'
 
 // exporting queries
 export * from './queries/institution/list'
+export * from './queries/institution/one'
+export * from './queries/institution/root'
 
 // exporting mutations
+export * from './mutations/institution/create'
+export * from './mutations/institution/root'
+export * from './mutations/institution/update'
+
+// exporting enums
+export * from './enums/InstitutionArea'
+export * from './enums/InstitutionLevel'

@@ -1,6 +1,5 @@
 import builder from '~/schema/pothos/builder'
 import { AuthMutations } from './root'
-import { UserSession } from '~/helpers/session/User.session'
 import { SessionManager } from '~/helpers/session/SessionManager'
 
 export type TAuthRefreshInput = {

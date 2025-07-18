@@ -25,8 +25,8 @@ export const AuthLoginResponse = builder
   .objectRef<TAuthLoginResponse>('AuthLoginResponse')
   .implement({
     fields: (t) => ({
-      accessToken: t.exposeString('accessToken'),
-      refreshToken: t.exposeString('refreshToken'),
+      accessToken: t.exposeString('accessToken', { nullable: false }),
+      refreshToken: t.exposeString('refreshToken', { nullable: false }),
     }),
   })
 

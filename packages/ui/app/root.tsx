@@ -4,10 +4,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 
 import "./tailwind.css";
+import { AppEnvProvider, useAppEnv } from "./context/AppEnv";
+// import * as pkg from '@apollo/client'
+import { pick } from "lodash-es";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,7 +26,13 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const loader = () => {
+  return {
+    apiUrl: process.env.API_GRAPHQL_URL,
+  }
+}
+
+export function Layout ({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -40,6 +50,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+// const InternalIndex = () => {
+//   const { apiUrl } = useAppEnv()
+//   const apiClient = new ApolloClient({
+//     uri: apiUrl,
+//     cache: new InMemoryCache(),
+//     credentials: 'include' // using with cookies
+//   })
+//   return (
+//     <ApolloProvider client={apiClient}><Outlet /></ApolloProvider>
+//   )
+// }
+
+export default function App () {
+  // const loaderData = useLoaderData<typeof loader>()
+  return (
+    <Outlet />
+    // <AppEnvProvider data={pick(loaderData, 'apiUrl')}>
+    //   <Outlet />
+    // </AppEnvProvider>
+  )
 }

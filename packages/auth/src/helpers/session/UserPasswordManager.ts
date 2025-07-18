@@ -1,4 +1,5 @@
 import { pbkdf2Sync, randomBytes } from 'node:crypto'
+import type { Db } from '@sigep/db'
 
 const ITERATIONS = 10000
 
@@ -6,10 +7,28 @@ export class UserPasswordManager {
   protected username: string
   protected password: string
 
-  constructor(data: { username: string; password: string }) {
+  constructor(
+    data: { username: string; password: string },
+    protected db: Db,
+  ) {
     const { password, username } = data
     this.password = password
     this.username = username
+  }
+
+  async verify(): Promise<{ valid: false } | { valid: true; uid: string }> {
+    const result = await this.db.query.User.findFirst({
+      where: (fields, { eq }) => eq(fields.name, this.username),
+    })
+    if (!result) return { valid: false }
+
+    const { password: hash, salt, uid } = result
+    if (!this.verifyPassword({ hash, salt })) return { valid: false }
+
+    return {
+      valid: true,
+      uid,
+    }
   }
 
   generatePasswordAndSalt() {
@@ -29,7 +48,7 @@ export class UserPasswordManager {
     return { salt, hash }
   }
 
-  verifyPassword(data: { hash: string; salt: string }) {
+  protected verifyPassword(data: { hash: string; salt: string }) {
     const { hash, salt } = data
     // Hash the provided password with the stored salt
     const hashedPassword = pbkdf2Sync(

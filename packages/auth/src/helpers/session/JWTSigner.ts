@@ -7,7 +7,7 @@ import type {
   RefreshTokenPayload,
 } from './types'
 
-export const ISSUER = 'auth.solofactura.com'
+export const ISSUER = 'auth.utpl-practicum.com'
 
 export class JWTSigner {
   protected accessTokenExp = '10m'

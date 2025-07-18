@@ -4,5 +4,8 @@ import type { JWTAccessTokenPayload } from '@sigep/auth'
 export type AppContext = {
   db: Db
   client: Client
-  token?: JWTAccessTokenPayload
+  user: {
+    uid: string
+  }
+  token: JWTAccessTokenPayload
 }

@@ -8,9 +8,13 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core'
 import { Person } from './person'
+import { User } from './user'
 
 export const institutionAreaEnum = pgEnum('InstitutionArea', ['educacion'])
-export const governanceLevelEnum = pgEnum('InstitutionGovernanceLevel', ['nacional'])
+export const institutionGovernanceLevelEnum = pgEnum(
+  'InstitutionGovernanceLevel',
+  ['nacional'],
+)
 
 export const Institution = pgTable('Institution', {
   id: serial().primaryKey(),
@@ -20,11 +24,11 @@ export const Institution = pgTable('Institution', {
     .default(sql`uuid_generate_v4()`)
     .notNull(),
   area: institutionAreaEnum().notNull(),
-  level: governanceLevelEnum().notNull(),
+  level: institutionGovernanceLevelEnum().notNull(),
   createdBy: varchar()
-    .references(() => Person.uid)
+    .references(() => User.uid)
     .notNull(),
-  updatedBy: varchar().references(() => Person.uid),
+  updatedBy: varchar().references(() => User.uid),
   createdAt: timestamp({ withTimezone: false }).defaultNow().notNull(),
   updatedAt: timestamp({ withTimezone: false })
     .defaultNow()
