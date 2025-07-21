@@ -7,7 +7,6 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { Person } from './person'
 import { User } from './user'
 
 export const institutionAreaEnum = pgEnum('InstitutionArea', ['educacion'])
@@ -38,13 +37,13 @@ export const Institution = pgTable('Institution', {
 })
 
 export const institutionRelations = relations(Institution, ({ one }) => ({
-  createdBy: one(Person, {
+  createdBy: one(User, {
     fields: [Institution.createdBy],
-    references: [Person.uid],
+    references: [User.uid],
   }),
-  updatedBy: one(Person, {
+  updatedBy: one(User, {
     fields: [Institution.updatedBy],
-    references: [Person.uid],
+    references: [User.uid],
   }),
 }))
 

@@ -5,6 +5,7 @@
 
 // exporting tables
 export * from './tables/institution'
+export * from './tables/institutionalPlan'
 export * from './tables/person'
 export * from './tables/user'
 
