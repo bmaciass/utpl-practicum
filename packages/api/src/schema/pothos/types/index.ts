@@ -11,16 +11,23 @@ export * from './inputs/FilterInputs'
 
 // exporting objects
 export * from './objects/Institution'
+export * from './objects/User'
 
 // exporting queries
 export * from './queries/institution/list'
 export * from './queries/institution/one'
 export * from './queries/institution/root'
+export * from './queries/user/list'
+export * from './queries/user/one'
+export * from './queries/user/root'
 
 // exporting mutations
 export * from './mutations/institution/create'
 export * from './mutations/institution/root'
 export * from './mutations/institution/update'
+export * from './mutations/user/create'
+export * from './mutations/user/root'
+export * from './mutations/user/update'
 
 // exporting enums
 export * from './enums/InstitutionArea'

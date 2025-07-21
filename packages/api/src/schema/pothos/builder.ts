@@ -13,6 +13,7 @@ import { DecimalResolver } from './types/scalars/Decimal'
 const builder = new SchemaBuilder<{
   Context: AppContext
   DefaultFieldNullability: false
+  DefaultInputFieldRequiredness: true
   AuthScopes: {
     authenticated: boolean
   }
@@ -37,6 +38,7 @@ const builder = new SchemaBuilder<{
   }
 }>({
   defaultFieldNullability: false,
+  defaultInputFieldRequiredness: true,
   plugins: [ScopeAuthPlugin],
   scopeAuth: {
     unauthorizedError: () => 'Not authorized',

@@ -4,6 +4,14 @@ input CreateInstitutionDataInput {
   name: String!
 }
 
+input CreateUserDataInput {
+  dni: String!
+  firstName: String!
+  lastName: String!
+  name: String!
+  password: String!
+}
+
 """
 A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -56,17 +64,19 @@ scalar JSON
 
 type Mutation {
   institution: InstitutionMutations!
+  user: UserMutations!
 }
 
 type Query {
   institution: InstitutionQueries!
+  user: UserQueries!
 }
 
 input StringFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  startsWith: String
+  contains: String!
+  endsWith: String!
+  equals: String!
+  startsWith: String!
 }
 
 input UpdateInstitutionDataInput {
@@ -78,4 +88,42 @@ input UpdateInstitutionDataInput {
 
 input UpdateInstitutionWhereInput {
   id: String!
+}
+
+input UpdateUserDataInput {
+  active: Boolean
+  dni: String
+  firstName: String
+  lastName: String
+  name: String
+  password: String
+}
+
+input UpdateUserWhereInput {
+  id: String!
+}
+
+type User {
+  active: Boolean!
+  dni: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+  name: String!
+}
+
+"""User mutations"""
+type UserMutations {
+  create(data: CreateUserDataInput!): User!
+  update(data: UpdateUserDataInput!, where: UpdateUserWhereInput!): User!
+}
+
+"""User queries"""
+type UserQueries {
+  list(active: Boolean, name: StringFilter): UsersQueryResponse!
+  one(id: String!): User
+}
+
+type UsersQueryResponse {
+  records: [User!]!
 }

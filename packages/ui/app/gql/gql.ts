@@ -18,12 +18,20 @@ type Documents = {
     "\n  query GetInstitutions_useGetInstitution ($id: String!) {\n    institution {\n      one (id: $id) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n": typeof types.GetInstitutions_UseGetInstitutionDocument,
     "\n  query GetInstitutions_useInstitutionList {\n    institution {\n      list {\n        records {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.GetInstitutions_UseInstitutionListDocument,
     "\n  mutation UpdateInstitution_useSaveInstitution ($data: UpdateInstitutionDataInput!, $where: UpdateInstitutionWhereInput!) {\n    institution {\n      update (data: $data, where: $where) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n": typeof types.UpdateInstitution_UseSaveInstitutionDocument,
+    "\n  mutation CreateUser_useCreateUser ($data: CreateUserDataInput!) {\n    user {\n      create (data: $data) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n": typeof types.CreateUser_UseCreateUserDocument,
+    "\n  query GetUsers_useGetUser ($id: String!) {\n    user {\n      one (id: $id) {\n        id\n        name\n        dni\n        firstName\n        lastName\n        active\n      }\n    }\n  }\n": typeof types.GetUsers_UseGetUserDocument,
+    "\n  mutation UpdateUser_useUpdateUser ($data: UpdateUserDataInput!, $where: UpdateUserWhereInput!) {\n    user {\n      update (data: $data, where: $where) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n": typeof types.UpdateUser_UseUpdateUserDocument,
+    "\n  query GetUsers_useUserList {\n    user {\n      list {\n        records {\n          id\n          name\n          active\n        }\n      }\n    }\n  }\n": typeof types.GetUsers_UseUserListDocument,
 };
 const documents: Documents = {
     "\n  mutation CreateInstitution_useSaveInstitution ($data: CreateInstitutionDataInput!) {\n    institution {\n      create (data: $data) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n": types.CreateInstitution_UseSaveInstitutionDocument,
     "\n  query GetInstitutions_useGetInstitution ($id: String!) {\n    institution {\n      one (id: $id) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n": types.GetInstitutions_UseGetInstitutionDocument,
     "\n  query GetInstitutions_useInstitutionList {\n    institution {\n      list {\n        records {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.GetInstitutions_UseInstitutionListDocument,
     "\n  mutation UpdateInstitution_useSaveInstitution ($data: UpdateInstitutionDataInput!, $where: UpdateInstitutionWhereInput!) {\n    institution {\n      update (data: $data, where: $where) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n": types.UpdateInstitution_UseSaveInstitutionDocument,
+    "\n  mutation CreateUser_useCreateUser ($data: CreateUserDataInput!) {\n    user {\n      create (data: $data) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n": types.CreateUser_UseCreateUserDocument,
+    "\n  query GetUsers_useGetUser ($id: String!) {\n    user {\n      one (id: $id) {\n        id\n        name\n        dni\n        firstName\n        lastName\n        active\n      }\n    }\n  }\n": types.GetUsers_UseGetUserDocument,
+    "\n  mutation UpdateUser_useUpdateUser ($data: UpdateUserDataInput!, $where: UpdateUserWhereInput!) {\n    user {\n      update (data: $data, where: $where) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n": types.UpdateUser_UseUpdateUserDocument,
+    "\n  query GetUsers_useUserList {\n    user {\n      list {\n        records {\n          id\n          name\n          active\n        }\n      }\n    }\n  }\n": types.GetUsers_UseUserListDocument,
 };
 
 /**
@@ -56,6 +64,22 @@ export function graphql(source: "\n  query GetInstitutions_useInstitutionList {\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation UpdateInstitution_useSaveInstitution ($data: UpdateInstitutionDataInput!, $where: UpdateInstitutionWhereInput!) {\n    institution {\n      update (data: $data, where: $where) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateInstitution_useSaveInstitution ($data: UpdateInstitutionDataInput!, $where: UpdateInstitutionWhereInput!) {\n    institution {\n      update (data: $data, where: $where) {\n        id\n        name\n        area\n        level\n        active\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateUser_useCreateUser ($data: CreateUserDataInput!) {\n    user {\n      create (data: $data) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateUser_useCreateUser ($data: CreateUserDataInput!) {\n    user {\n      create (data: $data) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetUsers_useGetUser ($id: String!) {\n    user {\n      one (id: $id) {\n        id\n        name\n        dni\n        firstName\n        lastName\n        active\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetUsers_useGetUser ($id: String!) {\n    user {\n      one (id: $id) {\n        id\n        name\n        dni\n        firstName\n        lastName\n        active\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateUser_useUpdateUser ($data: UpdateUserDataInput!, $where: UpdateUserWhereInput!) {\n    user {\n      update (data: $data, where: $where) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUser_useUpdateUser ($data: UpdateUserDataInput!, $where: UpdateUserWhereInput!) {\n    user {\n      update (data: $data, where: $where) {\n        id\n        name\n        firstName\n        lastName\n        dni\n        active\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetUsers_useUserList {\n    user {\n      list {\n        records {\n          id\n          name\n          active\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetUsers_useUserList {\n    user {\n      list {\n        records {\n          id\n          name\n          active\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

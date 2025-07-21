@@ -26,7 +26,7 @@ builder.objectField(InstitutionQueries, 'list', (t) =>
     },
     resolve: async (_, __, { db }) => {
       const institutions = await new InstitutionModel(db).findMany({
-        fields: ['active', 'name', 'uid'],
+        fields: ['active', 'name', 'uid', 'area', 'level'],
       })
       return { records: institutions }
     },

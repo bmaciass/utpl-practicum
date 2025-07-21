@@ -41,6 +41,7 @@ async function seedOrganizationData(db: Db) {
       salt,
       uid: nanoid(),
       personUid: adminPerson.uid,
+      // createdBy: '0',
     })
     .returning()
 
