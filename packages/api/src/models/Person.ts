@@ -1,16 +1,14 @@
-import { SessionManager, UserPasswordManager } from '@sigep/auth'
 import {
   type Db,
-  type PersonPayload,
   Person,
+  type PersonPayload,
   type PersonRecord,
 } from '@sigep/db'
-import { eq, sql, type SQL } from 'drizzle-orm'
-import { compact, isEmpty, isNil, set } from 'lodash-es'
+import { type SQL, eq } from 'drizzle-orm'
+import { compact, isNil } from 'lodash-es'
 import { fieldsToColumns } from '~/helpers/fieldsToColumns'
 import type { TStringFilter } from '~/helpers/filter-inputs'
 import { stringCondition } from '~/helpers/gqlFiltersToDrizzleFilters'
-import { hashAndSaltFromPassword } from '~/helpers/hashAndSaltFromPassword'
 
 type FindManyWhereFilters = {
   firstName?: TStringFilter

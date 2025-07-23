@@ -26,7 +26,7 @@
     "@remix-run/cloudflare-pages": "^2.16.8",
     "@remix-run/react": "^2.16.8",
     "@remix-run/serve": "^2.16.8",
-    "@sigep/auth": "workspace:*",
+    "@sigep/api": "workspace:*",
     "@sigep/db": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -1,11 +1,11 @@
-import { InstitutionModel } from '~/models/Institution'
-import builder from '../../../builder'
-import { Institution } from '../../objects/Institution'
-import { InstitutionMutations } from './root'
 import type { InstitutionPayload } from '@sigep/db'
 import type { SetOptional } from 'type-fest'
+import { InstitutionModel } from '~/models/Institution'
+import builder from '../../../builder'
 import { InstitutionAreaEnum } from '../../enums/InstitutionArea'
 import { InstitutionLevelEnum } from '../../enums/InstitutionLevel'
+import { Institution } from '../../objects/Institution'
+import { InstitutionMutations } from './root'
 
 type TUpdateInstitutionWhereInput = {
   id: string
@@ -51,7 +51,8 @@ builder.objectField(InstitutionMutations, 'update', (t) =>
         level: data.level ?? undefined,
         name: data.name ?? undefined,
       })
-      return institution
+
+      return { ...institution, objetives: [] }
     },
   }),
 )

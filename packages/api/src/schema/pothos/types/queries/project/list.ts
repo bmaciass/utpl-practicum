@@ -1,20 +1,18 @@
-import { InstitutionModel } from '~/models/Institution'
-import builder from '../../../builder'
-import { StringFilter } from '../../inputs/FilterInputs'
-import { ProjectQueries } from './root'
-import { Program, type TProgram } from '../../objects/Program'
-import { ProgramModel } from '~/models/Program'
 import { pick } from 'lodash-es'
+import { ProjectModel } from '~/models/Project'
+import builder from '../../../builder'
+import { Project, type TProject } from '../../objects/Project'
+import { ProjectQueries } from './root'
 
 export type TProjectsQueryResponse = {
-  records: TProgram[]
+  records: TProject[]
 }
 
 export const ProjectsQueryResponse = builder
   .objectRef<TProjectsQueryResponse>('ProjectsQueryResponse')
   .implement({
     fields: (t) => ({
-      records: t.expose('records', { type: [Program] }),
+      records: t.expose('records', { type: [Project] }),
     }),
   })
 
@@ -24,10 +22,11 @@ builder.objectField(ProjectQueries, 'list', (t) =>
     authScopes: { authenticated: true },
     args: {
       active: t.arg.boolean({ required: false }),
-      name: t.arg({ type: StringFilter, required: false }),
+      programId: t.arg.string({ required: true }),
     },
-    resolve: async (_, __, { db }) => {
-      const programs = await new ProgramModel(db).findMany({
+    resolve: async (_, { programId, active }, { db }) => {
+      const projects = await new ProjectModel(db).findMany({
+        where: { programUid: programId, active: active ?? undefined },
         fields: [
           'active',
           'name',
@@ -35,38 +34,23 @@ builder.objectField(ProjectQueries, 'list', (t) =>
           'startDate',
           'endDate',
           'description',
+          'status',
         ],
       })
       return {
-        records: programs.map((program) => ({
-          ...pick(program, [
+        records: projects.map((project) => ({
+          ...pick(project, [
             'active',
+            'description',
             'name',
             'startDate',
             'endDate',
-            'description',
+            'status',
           ]),
-          id: program.uid,
-          projects: program.projects.map((project) => ({
-            ...pick(project, [
-              'active',
-              'description',
-              'name',
-              'startDate',
-              'endDate',
-              'status',
-            ]),
-            id: project.uid,
-            goals: project.goals.map((goal) => ({
-              ...pick(goal, [
-                'name',
-                'active',
-                'status',
-                'startDate',
-                'endDate',
-              ]),
-              id: goal.uid,
-            })),
+          id: project.uid,
+          goals: project.goals.map((goal) => ({
+            ...pick(goal, ['name', 'active', 'status', 'startDate', 'endDate']),
+            id: goal.uid,
           })),
         })),
       }

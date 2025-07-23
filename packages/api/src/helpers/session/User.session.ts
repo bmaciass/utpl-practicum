@@ -1,4 +1,4 @@
-import { type Db, User, type UserRecord } from '@sigep/db'
+import { type Db, User } from '@sigep/db'
 import { eq } from 'drizzle-orm'
 import { isEmpty } from 'lodash-es'
 import { SessionManager } from './SessionManager'
@@ -35,19 +35,15 @@ export class UserSession {
     }
   }
 
-  protected async verifyUserAndPassword(
-    userRecord: UserRecord,
-    username: string,
-    password: string,
-  ) {
-    const validator = new UserPasswordManager({
-      password,
-      username: username,
-    })
-    return validator.verifyPassword({
-      hash: userRecord.password,
-      salt: userRecord.salt,
-    })
+  protected async verifyUserAndPassword(username: string, password: string) {
+    const validator = new UserPasswordManager(
+      {
+        password,
+        username: username,
+      },
+      this.db,
+    )
+    return validator.verify()
   }
 
   async login(data: {
@@ -58,11 +54,7 @@ export class UserSession {
     const { username, password } = data
     const User = await this.getByUsername(username)
     if (!User) return { valid: false, reason: 'username not found' }
-    const isPasswordValid = await this.verifyUserAndPassword(
-      User,
-      username,
-      password,
-    )
+    const isPasswordValid = await this.verifyUserAndPassword(username, password)
     if (!isPasswordValid) return { valid: false, reason: 'invalid password' }
 
     const { accessToken, refreshToken } = await this.sessionManager.create({

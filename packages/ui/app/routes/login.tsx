@@ -8,7 +8,7 @@ import { type ActionFunctionArgs, data } from "@remix-run/cloudflare";
 import { useActionData, useNavigate, useSubmit } from "@remix-run/react";
 import { notFound } from "~/helpers/notFound";
 import { getAccessTokenCookie } from "~/cookies/access-token.server";
-import { SessionManager, UserPasswordManager } from '@sigep/auth'
+import { SessionManager, UserPasswordManager } from '@sigep/api'
 import { getDBConnection } from '@sigep/db'
 import { isEmpty } from 'lodash-es'
 

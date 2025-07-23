@@ -1,4 +1,4 @@
-import { UserPasswordManager } from '@sigep/auth'
+import { UserPasswordManager } from '@sigep/api'
 import {
   type Db,
   Institution,

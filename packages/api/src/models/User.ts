@@ -1,4 +1,3 @@
-import { SessionManager, UserPasswordManager } from '@sigep/auth'
 import {
   type Db,
   type PersonPayload,
@@ -6,8 +5,8 @@ import {
   type UserPayload,
   type UserRecord,
 } from '@sigep/db'
-import { eq, sql, type SQL } from 'drizzle-orm'
-import { compact, isEmpty, isNil, set } from 'lodash-es'
+import { type SQL, eq } from 'drizzle-orm'
+import { compact, isNil } from 'lodash-es'
 import { fieldsToColumns } from '~/helpers/fieldsToColumns'
 import type { TStringFilter } from '~/helpers/filter-inputs'
 import { stringCondition } from '~/helpers/gqlFiltersToDrizzleFilters'
@@ -72,9 +71,7 @@ export class UserModel {
     return institution
   }
 
-  async create(
-    data: Pick<UserPayload, 'name' | 'password' | 'personUid'>,
-  ) {
+  async create(data: Pick<UserPayload, 'name' | 'password' | 'personUid'>) {
     const { hash, salt } = hashAndSaltFromPassword(data.password)
     const [row] = await this.db
       .insert(User)
@@ -91,9 +88,7 @@ export class UserModel {
 
   async update(
     uid: string,
-    data: Partial<
-      Pick<UserPayload, 'name' | 'password' | 'active'>
-    >,
+    data: Partial<Pick<UserPayload, 'name' | 'password' | 'active'>>,
   ) {
     const { password } = data
     let hash: string | undefined = undefined

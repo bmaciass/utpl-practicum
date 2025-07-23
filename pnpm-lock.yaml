@@ -23,9 +23,6 @@ importers:
       '@remix-run/cloudflare':
         specifier: ^2.16.8
         version: 2.16.8(@cloudflare/workers-types@4.20250620.0)(typescript@5.8.3)
-      '@sigep/auth':
-        specifier: workspace:*
-        version: link:../auth
       '@sigep/db':
         specifier: workspace:*
         version: link:../db
@@ -85,61 +82,6 @@ importers:
         specifier: 4.21.2
         version: 4.21.2(@cloudflare/workers-types@4.20250620.0)
 
-  packages/auth:
-    dependencies:
-      '@pothos/core':
-        specifier: ^4.7.0
-        version: 4.7.0(graphql@16.11.0)
-      '@pothos/plugin-scope-auth':
-        specifier: ^4.1.5
-        version: 4.1.5(@pothos/core@4.7.0(graphql@16.11.0))(graphql@16.11.0)
-      '@sigep/db':
-        specifier: workspace:*
-        version: link:../db
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      decimal.js:
-        specifier: ^10.5.0
-        version: 10.5.0
-      drizzle-orm:
-        specifier: ^0.44.2
-        version: 0.44.2(@cloudflare/workers-types@4.20250620.0)(@types/pg@8.15.4)(pg@8.16.3)(postgres@3.4.7)
-      graphql:
-        specifier: ^16.11.0
-        version: 16.11.0
-      graphql-scalars:
-        specifier: ^1.24.2
-        version: 1.24.2(graphql@16.11.0)
-      graphql-yoga:
-        specifier: ^5.13.5
-        version: 5.13.5(graphql@16.11.0)
-      jose:
-        specifier: ^6.0.11
-        version: 6.0.11
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-    devDependencies:
-      '@cloudflare/vitest-pool-workers':
-        specifier: ^0.8.19
-        version: 0.8.44(@cloudflare/workers-types@4.20250620.0)(@vitest/runner@3.2.4)(@vitest/snapshot@3.2.4)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.0.3)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.8.0))
-      '@types/node':
-        specifier: ^24.0.3
-        version: 24.0.3
-      tsx:
-        specifier: ^4.20.1
-        version: 4.20.3
-      typescript:
-        specifier: ^5.5.2
-        version: 5.8.3
-      vitest:
-        specifier: ~3.2.0
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.0.3)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.8.0)
-      wrangler:
-        specifier: 4.21.2
-        version: 4.21.2(@cloudflare/workers-types@4.20250620.0)
-
   packages/db:
     dependencies:
       drizzle-orm:
@@ -176,9 +118,9 @@ importers:
 
   packages/shared/seeders:
     devDependencies:
-      '@sigep/auth':
+      '@sigep/api':
         specifier: workspace:*
-        version: link:../../auth
+        version: link:../../api
       '@sigep/db':
         specifier: workspace:*
         version: link:../../db
@@ -233,9 +175,9 @@ importers:
       '@remix-run/serve':
         specifier: ^2.16.8
         version: 2.16.8(typescript@5.8.3)
-      '@sigep/auth':
+      '@sigep/api':
         specifier: workspace:*
-        version: link:../auth
+        version: link:../api
       '@sigep/db':
         specifier: workspace:*
         version: link:../db
