@@ -36,16 +36,5 @@ export const Institution = pgTable('Institution', {
   active: boolean().default(true).notNull(),
 })
 
-export const institutionRelations = relations(Institution, ({ one }) => ({
-  createdBy: one(User, {
-    fields: [Institution.createdBy],
-    references: [User.uid],
-  }),
-  updatedBy: one(User, {
-    fields: [Institution.updatedBy],
-    references: [User.uid],
-  }),
-}))
-
 export type InstitutionPayload = typeof Institution.$inferInsert
 export type InstitutionRecord = typeof Institution.$inferSelect

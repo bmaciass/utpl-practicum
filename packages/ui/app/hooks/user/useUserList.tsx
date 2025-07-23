@@ -8,6 +8,8 @@ export const query = graphql(`
         records {
           id
           name
+          firstName
+          lastName
           active
         }
       }

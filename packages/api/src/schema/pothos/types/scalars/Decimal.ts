@@ -9,45 +9,19 @@ const config: GraphQLScalarTypeConfig<number, number> = {
    * Value sent to the client
    */
   serialize(value) {
-    if (isNil(value))
-      throw new Error('null or undefined cannot represent a decimal')
+    if (!Decimal.isDecimal(value))
+      throw new Error('value is not a valid decimal')
 
-    if (Array.isArray(value))
-      throw new Error('array cannot represent a decimal')
-
-    if (value === true || value === false)
-      throw new Error('boolean cannot represent a decimal')
-
-    if (!Number.isNaN(value)) {
-      return new Decimal(value as number).toNumber()
-    }
-
-    if (Number.isNaN(Number.parseInt(value as string)))
-      throw new Error('invalid string value cannot represent a decimal')
-
-    return new Decimal(value as string).toNumber()
+    return new Decimal(value).toNumber()
   },
   /**
    * Value from the client
    */
   parseValue(value) {
-    if (isNil(value))
-      throw new Error('null or undefined cannot represent a decimal')
+    if (!Decimal.isDecimal(value))
+      throw new Error('value is not a valid decimal')
 
-    if (Array.isArray(value))
-      throw new Error('array cannot represent a decimal')
-
-    if (value === true || value === false)
-      throw new Error('boolean cannot represent a decimal')
-
-    if (!Number.isNaN(value)) {
-      return new Decimal(value as number).toNumber()
-    }
-
-    if (Number.isNaN(Number.parseInt(value as string)))
-      throw new Error('invalid string value cannot represent a decimal')
-
-    return new Decimal(value as string).toNumber()
+    return new Decimal(value).toNumber()
   },
   parseLiteral(ast) {
     if (

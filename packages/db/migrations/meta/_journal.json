@@ -15,6 +15,13 @@
       "when": 1752855165808,
       "tag": "0001_change_institution_references",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753291789883,
+      "tag": "0002_added_more_entities",
+      "breakpoints": true
     }
   ]
 }

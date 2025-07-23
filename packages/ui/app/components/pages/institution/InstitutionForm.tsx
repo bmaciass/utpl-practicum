@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate, useSubmit } from "@remix-run/react"
+import { isNil } from "lodash-es"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -32,7 +33,7 @@ const formSchema = z.object({
 
 export function InstitutionForm (props: { institution?: GetInstitutions_UseGetInstitutionQuery['institution']['one'] }) {
   const { institution } = props
-  const shouldUpdate = typeof institution !== 'undefined'
+  const shouldUpdate = !isNil(institution)
 
   const { createInstitution, error: errorCreate, loading: loadingCreate, institution: institutionCreated } = useCreateInstitution()
   const { updateInstitution, error: errorUpdate, loading: loadingUpdate } = useUpdateInstitution()

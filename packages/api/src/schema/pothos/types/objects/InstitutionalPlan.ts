@@ -10,7 +10,7 @@ export type TInstitutionalPlan = Pick<
 }
 
 export const InstitutionalPlan = builder
-  .objectRef<TInstitutionalPlan>('Institution')
+  .objectRef<TInstitutionalPlan>('InstitutionPlan')
   .implement({
     fields: (t) => ({
       id: t.exposeID('id'),

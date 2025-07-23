@@ -4,6 +4,22 @@ input CreateInstitutionDataInput {
   name: String!
 }
 
+input CreateInstitutionalPlanDataInput {
+  institutionId: String!
+  name: String!
+  url: String!
+  version: Int!
+  year: Int!
+}
+
+input CreateProgramDataInput {
+  description: String!
+  endDate: Date
+  name: String!
+  responsibleId: String!
+  startDate: Date
+}
+
 input CreateUserDataInput {
   dni: String!
   firstName: String!
@@ -31,10 +47,18 @@ type Institution {
   id: ID!
   level: InstitutionLevel!
   name: String!
+  objetives: [InstitutionEstraticObjetive!]!
 }
 
 enum InstitutionArea {
   educacion
+}
+
+type InstitutionEstraticObjetive {
+  active: Boolean!
+  endDate: Date
+  name: String!
+  startDate: Date
 }
 
 enum InstitutionLevel {
@@ -47,10 +71,35 @@ type InstitutionMutations {
   update(data: UpdateInstitutionDataInput!, where: UpdateInstitutionWhereInput!): Institution!
 }
 
+type InstitutionPlan {
+  active: Boolean!
+  id: ID!
+  institutionId: String!
+  name: String!
+  version: Int!
+  year: Int!
+}
+
 """Institution queries"""
 type InstitutionQueries {
   list(active: Boolean, name: StringFilter): InstitutionsQueryResponse!
-  one(id: String!): Institution!
+  one(id: String!): Institution
+}
+
+"""Institution Plan mutations"""
+type InstitutionalPlanMutations {
+  create(data: CreateInstitutionalPlanDataInput!): InstitutionPlan!
+  update(data: UpdateInstitutionalPlanDataInput!, where: UpdateInstitutionalPlanWhereInput!): InstitutionPlan!
+}
+
+"""Institutional Plan queries"""
+type InstitutionalPlanQueries {
+  list(active: Boolean, name: StringFilter): InstitutionalPlansQueryResponse!
+  one(id: String!): InstitutionPlan
+}
+
+type InstitutionalPlansQueryResponse {
+  records: [InstitutionPlan!]!
 }
 
 type InstitutionsQueryResponse {
@@ -64,11 +113,72 @@ scalar JSON
 
 type Mutation {
   institution: InstitutionMutations!
+  institutionalPlan: InstitutionalPlanMutations!
+  program: ProgramMutations!
   user: UserMutations!
+}
+
+type Program {
+  active: Boolean!
+  description: String
+  endDate: Date
+  id: ID!
+  name: String!
+  projects: [Project!]!
+  responsible: User!
+  responsibleId: String!
+  startDate: Date
+}
+
+"""Program mutations"""
+type ProgramMutations {
+  create(data: CreateProgramDataInput!): Program!
+  update(data: UpdateProgramDataInput!, where: UpdateProgramWhereInput!): Program!
+}
+
+"""Program queries"""
+type ProgramQueries {
+  list(active: Boolean, name: StringFilter): ProgramsQueryResponse!
+  one(id: String!): Program
+}
+
+type ProgramsQueryResponse {
+  records: [Program!]!
+}
+
+type Project {
+  active: Boolean!
+  description: String
+  endDate: Date
+  goals: [ProjectGoal!]!
+  id: ID!
+  name: String!
+  startDate: Date
+}
+
+type ProjectGoal {
+  active: Boolean!
+  endDate: Date
+  id: ID!
+  name: String!
+  startDate: Date
+}
+
+"""Project queries"""
+type ProjectQueries {
+  list(active: Boolean, name: StringFilter): ProjectsQueryResponse!
+  one(id: String!): Project
+}
+
+type ProjectsQueryResponse {
+  records: [Program!]!
 }
 
 type Query {
   institution: InstitutionQueries!
+  institutionalPlan: InstitutionalPlanQueries!
+  program: ProgramQueries!
+  project: ProjectQueries!
   user: UserQueries!
 }
 
@@ -87,6 +197,29 @@ input UpdateInstitutionDataInput {
 }
 
 input UpdateInstitutionWhereInput {
+  id: String!
+}
+
+input UpdateInstitutionalPlanDataInput {
+  active: Boolean!
+  name: String!
+  year: Int!
+}
+
+input UpdateInstitutionalPlanWhereInput {
+  id: String!
+}
+
+input UpdateProgramDataInput {
+  active: Boolean
+  description: String
+  endDate: Date
+  name: String
+  responsibleId: String
+  startDate: Date
+}
+
+input UpdateProgramWhereInput {
   id: String!
 }
 

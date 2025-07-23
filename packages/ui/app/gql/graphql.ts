@@ -70,6 +70,22 @@ export type CreateInstitutionDataInput = {
   name: Scalars['String']['input'];
 };
 
+export type CreateInstitutionalPlanDataInput = {
+  institutionId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  url: Scalars['String']['input'];
+  version: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+};
+
+export type CreateProgramDataInput = {
+  description: Scalars['String']['input'];
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  name: Scalars['String']['input'];
+  responsibleId: Scalars['String']['input'];
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
 export type CreateUserDataInput = {
   dni: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
@@ -85,11 +101,20 @@ export type Institution = {
   id: Scalars['ID']['output'];
   level: InstitutionLevel;
   name: Scalars['String']['output'];
+  objetives: Array<InstitutionEstraticObjetive>;
 };
 
 export enum InstitutionArea {
   Educacion = 'educacion'
 }
+
+export type InstitutionEstraticObjetive = {
+  __typename?: 'InstitutionEstraticObjetive';
+  active: Scalars['Boolean']['output'];
+  endDate?: Maybe<Scalars['Date']['output']>;
+  name: Scalars['String']['output'];
+  startDate?: Maybe<Scalars['Date']['output']>;
+};
 
 export enum InstitutionLevel {
   Nacional = 'nacional'
@@ -115,11 +140,21 @@ export type InstitutionMutationsUpdateArgs = {
   where: UpdateInstitutionWhereInput;
 };
 
+export type InstitutionPlan = {
+  __typename?: 'InstitutionPlan';
+  active: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  institutionId: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  version: Scalars['Int']['output'];
+  year: Scalars['Int']['output'];
+};
+
 /** Institution queries */
 export type InstitutionQueries = {
   __typename?: 'InstitutionQueries';
   list: InstitutionsQueryResponse;
-  one: Institution;
+  one?: Maybe<Institution>;
 };
 
 
@@ -135,6 +170,51 @@ export type InstitutionQueriesOneArgs = {
   id: Scalars['String']['input'];
 };
 
+/** Institution Plan mutations */
+export type InstitutionalPlanMutations = {
+  __typename?: 'InstitutionalPlanMutations';
+  create: InstitutionPlan;
+  update: InstitutionPlan;
+};
+
+
+/** Institution Plan mutations */
+export type InstitutionalPlanMutationsCreateArgs = {
+  data: CreateInstitutionalPlanDataInput;
+};
+
+
+/** Institution Plan mutations */
+export type InstitutionalPlanMutationsUpdateArgs = {
+  data: UpdateInstitutionalPlanDataInput;
+  where: UpdateInstitutionalPlanWhereInput;
+};
+
+/** Institutional Plan queries */
+export type InstitutionalPlanQueries = {
+  __typename?: 'InstitutionalPlanQueries';
+  list: InstitutionalPlansQueryResponse;
+  one?: Maybe<InstitutionPlan>;
+};
+
+
+/** Institutional Plan queries */
+export type InstitutionalPlanQueriesListArgs = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<StringFilter>;
+};
+
+
+/** Institutional Plan queries */
+export type InstitutionalPlanQueriesOneArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type InstitutionalPlansQueryResponse = {
+  __typename?: 'InstitutionalPlansQueryResponse';
+  records: Array<InstitutionPlan>;
+};
+
 export type InstitutionsQueryResponse = {
   __typename?: 'InstitutionsQueryResponse';
   records: Array<Institution>;
@@ -144,13 +224,121 @@ export type Mutation = {
   __typename?: 'Mutation';
   auth?: Maybe<AuthMutations>;
   institution: InstitutionMutations;
+  institutionalPlan: InstitutionalPlanMutations;
+  program: ProgramMutations;
   user: UserMutations;
+};
+
+export type Program = {
+  __typename?: 'Program';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  endDate?: Maybe<Scalars['Date']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  projects: Array<Project>;
+  responsible: User;
+  responsibleId: Scalars['String']['output'];
+  startDate?: Maybe<Scalars['Date']['output']>;
+};
+
+/** Program mutations */
+export type ProgramMutations = {
+  __typename?: 'ProgramMutations';
+  create: Program;
+  update: Program;
+};
+
+
+/** Program mutations */
+export type ProgramMutationsCreateArgs = {
+  data: CreateProgramDataInput;
+};
+
+
+/** Program mutations */
+export type ProgramMutationsUpdateArgs = {
+  data: UpdateProgramDataInput;
+  where: UpdateProgramWhereInput;
+};
+
+/** Program queries */
+export type ProgramQueries = {
+  __typename?: 'ProgramQueries';
+  list: ProgramsQueryResponse;
+  one?: Maybe<Program>;
+};
+
+
+/** Program queries */
+export type ProgramQueriesListArgs = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<StringFilter>;
+};
+
+
+/** Program queries */
+export type ProgramQueriesOneArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type ProgramsQueryResponse = {
+  __typename?: 'ProgramsQueryResponse';
+  records: Array<Program>;
+};
+
+export type Project = {
+  __typename?: 'Project';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  endDate?: Maybe<Scalars['Date']['output']>;
+  goals: Array<ProjectGoal>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  startDate?: Maybe<Scalars['Date']['output']>;
+};
+
+export type ProjectGoal = {
+  __typename?: 'ProjectGoal';
+  active: Scalars['Boolean']['output'];
+  endDate?: Maybe<Scalars['Date']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  startDate?: Maybe<Scalars['Date']['output']>;
+};
+
+/** Project queries */
+export type ProjectQueries = {
+  __typename?: 'ProjectQueries';
+  list: ProjectsQueryResponse;
+  one?: Maybe<Project>;
+};
+
+
+/** Project queries */
+export type ProjectQueriesListArgs = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<StringFilter>;
+};
+
+
+/** Project queries */
+export type ProjectQueriesOneArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type ProjectsQueryResponse = {
+  __typename?: 'ProjectsQueryResponse';
+  records: Array<Program>;
 };
 
 export type Query = {
   __typename?: 'Query';
   hello?: Maybe<Scalars['String']['output']>;
   institution: InstitutionQueries;
+  institutionalPlan: InstitutionalPlanQueries;
+  program: ProgramQueries;
+  project: ProjectQueries;
   user: UserQueries;
 };
 
@@ -169,6 +357,29 @@ export type UpdateInstitutionDataInput = {
 };
 
 export type UpdateInstitutionWhereInput = {
+  id: Scalars['String']['input'];
+};
+
+export type UpdateInstitutionalPlanDataInput = {
+  active: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+  year: Scalars['Int']['input'];
+};
+
+export type UpdateInstitutionalPlanWhereInput = {
+  id: Scalars['String']['input'];
+};
+
+export type UpdateProgramDataInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  responsibleId?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type UpdateProgramWhereInput = {
   id: Scalars['String']['input'];
 };
 
@@ -252,7 +463,7 @@ export type GetInstitutions_UseGetInstitutionQueryVariables = Exact<{
 }>;
 
 
-export type GetInstitutions_UseGetInstitutionQuery = { __typename?: 'Query', institution: { __typename?: 'InstitutionQueries', one: { __typename?: 'Institution', id: string, name: string, area: InstitutionArea, level: InstitutionLevel, active: boolean } } };
+export type GetInstitutions_UseGetInstitutionQuery = { __typename?: 'Query', institution: { __typename?: 'InstitutionQueries', one?: { __typename?: 'Institution', id: string, name: string, area: InstitutionArea, level: InstitutionLevel, active: boolean } | null } };
 
 export type GetInstitutions_UseInstitutionListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -266,6 +477,40 @@ export type UpdateInstitution_UseSaveInstitutionMutationVariables = Exact<{
 
 
 export type UpdateInstitution_UseSaveInstitutionMutation = { __typename?: 'Mutation', institution: { __typename?: 'InstitutionMutations', update: { __typename?: 'Institution', id: string, name: string, area: InstitutionArea, level: InstitutionLevel, active: boolean } } };
+
+export type CreateInstitutionalPlan_UseCreateInstitutionalPlanMutationVariables = Exact<{
+  data: CreateInstitutionalPlanDataInput;
+}>;
+
+
+export type CreateInstitutionalPlan_UseCreateInstitutionalPlanMutation = { __typename?: 'Mutation', institutionalPlan: { __typename?: 'InstitutionalPlanMutations', create: { __typename?: 'InstitutionPlan', id: string, name: string, active: boolean } } };
+
+export type CreateProgram_UseCreateProgramMutationVariables = Exact<{
+  data: CreateProgramDataInput;
+}>;
+
+
+export type CreateProgram_UseCreateProgramMutation = { __typename?: 'Mutation', program: { __typename?: 'ProgramMutations', create: { __typename?: 'Program', id: string, name: string, active: boolean } } };
+
+export type GetPrograms_UseGetProgramQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetPrograms_UseGetProgramQuery = { __typename?: 'Query', program: { __typename?: 'ProgramQueries', one?: { __typename?: 'Program', id: string, name: string, description?: string | null, responsibleId: string, active: boolean } | null } };
+
+export type GetProgramList_UseProgramListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProgramList_UseProgramListQuery = { __typename?: 'Query', program: { __typename?: 'ProgramQueries', list: { __typename?: 'ProgramsQueryResponse', records: Array<{ __typename?: 'Program', id: string, name: string }> } } };
+
+export type UpdateProgram_UseUpdateProgramMutationVariables = Exact<{
+  data: UpdateProgramDataInput;
+  where: UpdateProgramWhereInput;
+}>;
+
+
+export type UpdateProgram_UseUpdateProgramMutation = { __typename?: 'Mutation', program: { __typename?: 'ProgramMutations', update: { __typename?: 'Program', id: string, name: string, description?: string | null, responsibleId: string, active: boolean } } };
 
 export type CreateUser_UseCreateUserMutationVariables = Exact<{
   data: CreateUserDataInput;
@@ -292,14 +537,19 @@ export type UpdateUser_UseUpdateUserMutation = { __typename?: 'Mutation', user: 
 export type GetUsers_UseUserListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsers_UseUserListQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', list: { __typename?: 'UsersQueryResponse', records: Array<{ __typename?: 'User', id: string, name: string, active: boolean }> } } };
+export type GetUsers_UseUserListQuery = { __typename?: 'Query', user: { __typename?: 'UserQueries', list: { __typename?: 'UsersQueryResponse', records: Array<{ __typename?: 'User', id: string, name: string, firstName: string, lastName: string, active: boolean }> } } };
 
 
 export const CreateInstitution_UseSaveInstitutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInstitution_useSaveInstitution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateInstitutionDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"institution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"create"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"area"}},{"kind":"Field","name":{"kind":"Name","value":"level"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<CreateInstitution_UseSaveInstitutionMutation, CreateInstitution_UseSaveInstitutionMutationVariables>;
 export const GetInstitutions_UseGetInstitutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetInstitutions_useGetInstitution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"institution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"area"}},{"kind":"Field","name":{"kind":"Name","value":"level"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<GetInstitutions_UseGetInstitutionQuery, GetInstitutions_UseGetInstitutionQueryVariables>;
 export const GetInstitutions_UseInstitutionListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetInstitutions_useInstitutionList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"institution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"list"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetInstitutions_UseInstitutionListQuery, GetInstitutions_UseInstitutionListQueryVariables>;
 export const UpdateInstitution_UseSaveInstitutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateInstitution_useSaveInstitution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateInstitutionDataInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateInstitutionWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"institution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"area"}},{"kind":"Field","name":{"kind":"Name","value":"level"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateInstitution_UseSaveInstitutionMutation, UpdateInstitution_UseSaveInstitutionMutationVariables>;
+export const CreateInstitutionalPlan_UseCreateInstitutionalPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateInstitutionalPlan_useCreateInstitutionalPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateInstitutionalPlanDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"institutionalPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"create"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<CreateInstitutionalPlan_UseCreateInstitutionalPlanMutation, CreateInstitutionalPlan_UseCreateInstitutionalPlanMutationVariables>;
+export const CreateProgram_UseCreateProgramDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProgram_useCreateProgram"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateProgramDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"create"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<CreateProgram_UseCreateProgramMutation, CreateProgram_UseCreateProgramMutationVariables>;
+export const GetPrograms_UseGetProgramDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPrograms_useGetProgram"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"responsibleId"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<GetPrograms_UseGetProgramQuery, GetPrograms_UseGetProgramQueryVariables>;
+export const GetProgramList_UseProgramListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProgramList_useProgramList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"list"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetProgramList_UseProgramListQuery, GetProgramList_UseProgramListQueryVariables>;
+export const UpdateProgram_UseUpdateProgramDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProgram_useUpdateProgram"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProgramDataInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProgramWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"program"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"responsibleId"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateProgram_UseUpdateProgramMutation, UpdateProgram_UseUpdateProgramMutationVariables>;
 export const CreateUser_UseCreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser_useCreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"create"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"dni"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUser_UseCreateUserMutation, CreateUser_UseCreateUserMutationVariables>;
 export const GetUsers_UseGetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers_useGetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"dni"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<GetUsers_UseGetUserQuery, GetUsers_UseGetUserQueryVariables>;
 export const UpdateUser_UseUpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser_useUpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserDataInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"dni"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateUser_UseUpdateUserMutation, UpdateUser_UseUpdateUserMutationVariables>;
-export const GetUsers_UseUserListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers_useUserList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"list"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUsers_UseUserListQuery, GetUsers_UseUserListQueryVariables>;
+export const GetUsers_UseUserListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers_useUserList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"list"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"active"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUsers_UseUserListQuery, GetUsers_UseUserListQueryVariables>;

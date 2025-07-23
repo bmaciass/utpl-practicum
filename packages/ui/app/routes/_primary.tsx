@@ -1,4 +1,4 @@
-import { Link, Outlet, redirect, useNavigate } from "@remix-run/react";
+import { Link, Outlet, useNavigate } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "~/components/ui/navigation-menu";
 
@@ -20,6 +20,7 @@ export default function Layout () {
                 <NavigationMenuTrigger>Settings</NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-white border rounded shadow p-2">
                   <Link to="/users" className="block px-2 py-1 text-sm hover:bg-gray-100">Usuarios</Link>
+                  <Link to="/programs" className="block px-2 py-1 text-sm hover:bg-gray-100">Programas</Link>
                   <Link to="/institutions" className="block px-2 py-1 text-sm hover:bg-gray-100">Instituciones</Link>
                 </NavigationMenuContent>
               </NavigationMenuItem>

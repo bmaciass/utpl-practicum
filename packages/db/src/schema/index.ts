@@ -5,8 +5,17 @@
 
 // exporting tables
 export * from './tables/institution'
+export * from './tables/institutionEstrategicObjetive'
 export * from './tables/institutionalPlan'
 export * from './tables/person'
+export * from './tables/program'
+export * from './tables/project'
+export * from './tables/projectGoal'
 export * from './tables/user'
 
 // exporting relations
+export * from './relations/estrategicObjetiveRelations'
+export * from './relations/institutionRelations'
+export * from './relations/programRelations'
+export * from './relations/projectGoalsRelations'
+export * from './relations/projectRelations'

@@ -1,19 +1,21 @@
-import {
-  getDBConnection,
-  Institution,
-  type Db,
-  executeMigration,
-} from '@sigep/db'
-import { Person, User } from '@sigep/db'
-import { nanoid } from 'nanoid/non-secure'
 import { UserPasswordManager } from '@sigep/auth'
+import {
+  type Db,
+  Institution,
+  Person,
+  Program,
+  User,
+  executeMigration,
+  getDBConnection,
+} from '@sigep/db'
+import { nanoid } from 'nanoid/non-secure'
 
 async function recreatePublicSchema(db: Db) {
   await db.execute('DROP SCHEMA "public" CASCADE; CREATE SCHEMA "public";')
 }
 
 async function seedOrganizationData(db: Db) {
-  const [adminPerson] = await db
+  const [adminPerson, opPerson] = await db
     .insert(Person)
     .values([
       {
@@ -22,27 +24,55 @@ async function seedOrganizationData(db: Db) {
         dni: '0999999999',
         uid: nanoid(),
       },
+      {
+        firstName: 'Bryan',
+        lastName: 'Macias',
+        dni: '0931478093',
+        uid: nanoid(),
+      },
     ])
     .returning()
 
-  const { hash, salt } = new UserPasswordManager(
-    {
-      username: 'admin',
-      password: 'admin',
-    },
-    db,
-  ).generatePasswordAndSalt()
+  const [
+    { hash: hashUserAdmin, salt: saltUserAdmin },
+    { hash: hashOPUser, salt: saltOPUser },
+  ] = [
+    new UserPasswordManager(
+      {
+        username: 'admin',
+        password: 'admin',
+      },
+      db,
+    ).generatePasswordAndSalt(),
+    new UserPasswordManager(
+      {
+        username: 'bryan',
+        password: 'bryan',
+      },
+      db,
+    ).generatePasswordAndSalt(),
+  ]
 
-  const [user] = await db
+  const [userAdmin, userOperative] = await db
     .insert(User)
-    .values({
-      name: 'admin',
-      password: hash,
-      salt,
-      uid: nanoid(),
-      personUid: adminPerson.uid,
-      // createdBy: '0',
-    })
+    .values([
+      {
+        name: 'admin',
+        password: hashUserAdmin,
+        salt: saltUserAdmin,
+        uid: nanoid(),
+        personUid: adminPerson.uid,
+        // createdBy: '0',
+      },
+      {
+        name: 'bryan',
+        password: hashOPUser,
+        salt: saltOPUser,
+        uid: nanoid(),
+        personUid: opPerson.uid,
+        // createdBy: '0',
+      },
+    ])
     .returning()
 
   await db.insert(Institution).values({
@@ -50,7 +80,13 @@ async function seedOrganizationData(db: Db) {
     area: 'educacion',
     level: 'nacional',
     uid: '123123123',
-    createdBy: user.uid,
+    createdBy: userAdmin.uid,
+  })
+
+  await db.insert(Program).values({
+    createdBy: userAdmin.uid,
+    name: 'Program de Transformacion digital',
+    responsibleUid: userOperative.uid,
   })
 }
 
