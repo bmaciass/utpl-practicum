@@ -20,6 +20,15 @@ input CreateProgramDataInput {
   startDate: Date
 }
 
+input CreateProjectDataInput {
+  description: String!
+  endDate: Date
+  name: String!
+  programId: String!
+  responsibleId: String!
+  startDate: Date
+}
+
 input CreateUserDataInput {
   dni: String!
   firstName: String!
@@ -115,6 +124,7 @@ type Mutation {
   institution: InstitutionMutations!
   institutionalPlan: InstitutionalPlanMutations!
   program: ProgramMutations!
+  project: ProjectMutations!
   user: UserMutations!
 }
 
@@ -153,7 +163,10 @@ type Project {
   goals: [ProjectGoal!]!
   id: ID!
   name: String!
+  programId: String!
+  responsibleId: String!
   startDate: Date
+  status: ProjectStatus!
 }
 
 type ProjectGoal {
@@ -164,14 +177,27 @@ type ProjectGoal {
   startDate: Date
 }
 
+"""Project mutations"""
+type ProjectMutations {
+  create(data: CreateProjectDataInput!): Project!
+  update(data: UpdateProjectDataInput!, where: UpdateProjectWhereInput!): Project!
+}
+
 """Project queries"""
 type ProjectQueries {
-  list(active: Boolean, name: StringFilter): ProjectsQueryResponse!
+  list(active: Boolean, programId: String!): ProjectsQueryResponse!
   one(id: String!): Project
 }
 
+enum ProjectStatus {
+  cancelled
+  done
+  in_progress
+  pending
+}
+
 type ProjectsQueryResponse {
-  records: [Program!]!
+  records: [Project!]!
 }
 
 type Query {
@@ -220,6 +246,20 @@ input UpdateProgramDataInput {
 }
 
 input UpdateProgramWhereInput {
+  id: String!
+}
+
+input UpdateProjectDataInput {
+  active: Boolean
+  description: String
+  endDate: Date
+  name: String
+  responsibleId: String
+  startDate: Date
+  status: ProjectStatus
+}
+
+input UpdateProjectWhereInput {
   id: String!
 }
 

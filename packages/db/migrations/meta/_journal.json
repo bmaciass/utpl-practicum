@@ -22,6 +22,27 @@
       "when": 1753291789883,
       "tag": "0002_added_more_entities",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753300254388,
+      "tag": "0003_change_responsible_project",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1753301080170,
+      "tag": "0004_project_programuid_not_null",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1753306055258,
+      "tag": "0005_project_goal_projectuid_not_null",
+      "breakpoints": true
     }
   ]
 }

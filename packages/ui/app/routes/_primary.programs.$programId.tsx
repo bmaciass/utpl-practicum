@@ -6,12 +6,12 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { useGetProgram } from "~/hooks/program/useGetProgram";
 
 export default function Index () {
-  const { id } = useParams()
-  if (!id) {
+  const { programId } = useParams()
+  if (!programId) {
     return <Alert variant="error" description="Parametro no encontrado" />
   }
 
-  const { error, loading, program } = useGetProgram(id)
+  const { error, loading, program } = useGetProgram(programId)
   return (
     <>
       {error && <Alert variant="error" description={error.cause?.message ?? error.message} />}
@@ -21,7 +21,7 @@ export default function Index () {
           <ProgramForm program={program} />
         </div>
         <div className="flex gap-2">
-          <Link to={`/programs/${id}/projects`}>
+          <Link to={`/programs/${programId}/projects`}>
             <Button type="button" variant={'secondary'}>Ver Proyectos</Button>
           </Link>
         </div>

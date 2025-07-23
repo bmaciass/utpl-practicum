@@ -1,10 +1,10 @@
 import {
   type Db,
+  ProjectGoal,
   type ProjectGoalPayload,
   type ProjectGoalRecord,
-  ProjectGoal,
 } from '@sigep/db'
-import { eq, type SQL } from 'drizzle-orm'
+import { type SQL, eq } from 'drizzle-orm'
 import { compact, isNil } from 'lodash-es'
 import { fieldsToColumns } from '~/helpers/fieldsToColumns'
 
@@ -45,7 +45,7 @@ export class ProjectGoalModel {
 
   async findUnique<Fields extends Array<ProjectGoalSelectField>>(
     uid: string,
-    fields?: Array<keyof typeof ProjectGoal.$inferSelect>,
+    fields?: Fields,
   ): Promise<Pick<ProjectGoalRecord, Fields[number]> | undefined> {
     const projectGoal = await this.db.query.ProjectGoal.findFirst({
       where: (fields, operators) => operators.eq(fields.uid, uid),

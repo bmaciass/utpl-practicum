@@ -4,6 +4,8 @@ import {
   Institution,
   Person,
   Program,
+  Project,
+  ProjectGoal,
   User,
   executeMigration,
   getDBConnection,
@@ -83,10 +85,30 @@ async function seedOrganizationData(db: Db) {
     createdBy: userAdmin.uid,
   })
 
-  await db.insert(Program).values({
+  const [program] = await db
+    .insert(Program)
+    .values({
+      createdBy: userAdmin.uid,
+      name: 'Programa de Transformacion digital',
+      responsibleUid: userOperative.uid,
+    })
+    .returning()
+
+  const [project] = await db
+    .insert(Project)
+    .values({
+      name: 'Proyecto de levantamiento de datos',
+      createdBy: userAdmin.uid,
+      responsibleUid: userOperative.uid,
+      programUid: program.uid,
+    })
+    .returning()
+
+  await db.insert(ProjectGoal).values({
+    name: 'terminar el proyecto',
     createdBy: userAdmin.uid,
-    name: 'Program de Transformacion digital',
-    responsibleUid: userOperative.uid,
+    status: 'in_progress',
+    projectUid: project.uid,
   })
 }
 

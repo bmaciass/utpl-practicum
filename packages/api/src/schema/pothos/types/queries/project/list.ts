@@ -35,6 +35,8 @@ builder.objectField(ProjectQueries, 'list', (t) =>
           'endDate',
           'description',
           'status',
+          'programUid',
+          'responsibleUid',
         ],
       })
       return {
@@ -48,6 +50,8 @@ builder.objectField(ProjectQueries, 'list', (t) =>
             'status',
           ]),
           id: project.uid,
+          programId: project.programUid,
+          responsibleId: project.responsibleUid,
           goals: project.goals.map((goal) => ({
             ...pick(goal, ['name', 'active', 'status', 'startDate', 'endDate']),
             id: goal.uid,

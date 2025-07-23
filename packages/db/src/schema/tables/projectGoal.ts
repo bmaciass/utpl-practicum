@@ -8,8 +8,8 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { User } from './user'
 import { Project } from './project'
+import { User } from './user'
 
 export const projectGoalStatus = pgEnum('ProjectGoalStatus', [
   'pending',
@@ -25,7 +25,9 @@ export const ProjectGoal = pgTable('ProjectGoal', {
     .unique()
     .default(sql`uuid_generate_v4()`)
     .notNull(),
-  projectUid: varchar().references(() => Project.uid),
+  projectUid: varchar()
+    .references(() => Project.uid)
+    .notNull(),
   status: projectGoalStatus().notNull().default('pending'),
   startDate: date({ mode: 'date' }),
   endDate: date({ mode: 'date' }),

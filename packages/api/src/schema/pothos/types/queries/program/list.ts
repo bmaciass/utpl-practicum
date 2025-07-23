@@ -63,6 +63,8 @@ builder.objectField(ProgramQueries, 'list', (t) =>
               'status',
             ]),
             id: project.uid,
+            programId: program.uid,
+            responsibleId: project.responsibleUid,
             goals: project.goals.map((goal) => ({
               ...pick(goal, [
                 'name',

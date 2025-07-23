@@ -1,8 +1,8 @@
+import { pick } from 'lodash-es'
 import { ProjectModel } from '~/models/Project'
 import builder from '../../../builder'
-import { ProjectQueries } from './root'
 import { Project, type TProject } from '../../objects/Project'
-import { pick } from 'lodash-es'
+import { ProjectQueries } from './root'
 
 builder.objectField(ProjectQueries, 'one', (t) =>
   t.field({
@@ -20,6 +20,9 @@ builder.objectField(ProjectQueries, 'one', (t) =>
         'startDate',
         'endDate',
         'description',
+        'programUid',
+        'responsibleUid',
+        'status',
       ])
       if (!project) return null
 
@@ -30,8 +33,11 @@ builder.objectField(ProjectQueries, 'one', (t) =>
           'startDate',
           'endDate',
           'description',
+          'status',
         ]),
         id: project.uid,
+        programId: project.programUid,
+        responsibleId: project.responsibleUid,
         goals: project.goals.map((goal) => ({
           ...pick(goal, ['active', 'name', 'startDate', 'endDate', 'status']),
           id: goal.uid,

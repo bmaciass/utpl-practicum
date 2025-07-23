@@ -91,7 +91,7 @@ export class ProjectModel {
       | 'startDate'
       | 'endDate'
       | 'programUid'
-      | 'responsible'
+      | 'responsibleUid'
     >,
   ) {
     const [row] = await this.db.insert(Project).values(data).returning()
@@ -106,20 +106,20 @@ export class ProjectModel {
         | 'name'
         | 'description'
         | 'status'
-        | 'createdBy'
+        | 'updatedBy'
         | 'startDate'
         | 'endDate'
         | 'programUid'
-        | 'responsible'
+        | 'responsibleUid'
         | 'active'
       >
     >,
   ) {
-    const row = await this.db
+    const [row] = await this.db
       .update(Project)
       .set(data)
       .where(eq(Project.uid, uid))
       .returning()
-    return [row]
+    return row
   }
 }

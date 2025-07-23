@@ -1,0 +1,1 @@
+ALTER TABLE "ProjectGoal" ALTER COLUMN "projectUid" SET NOT NULL;

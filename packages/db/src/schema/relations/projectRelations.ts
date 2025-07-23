@@ -11,7 +11,7 @@ export const projectRelations = relations(Project, ({ one, many }) => ({
     references: [Program.uid],
   }),
   responsible: one(User, {
-    fields: [Project.responsible],
+    fields: [Project.responsibleUid],
     references: [User.uid],
   }),
   createdBy: one(User, {

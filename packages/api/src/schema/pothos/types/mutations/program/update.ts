@@ -6,6 +6,7 @@ import { ProjectModel } from '~/models/Project'
 import { UserModel } from '~/models/User'
 import builder from '../../../builder'
 import { Program } from '../../objects/Program'
+import type { TProject } from '../../objects/Project'
 import { ProgramMutations } from './root'
 
 type TUpdateProgramWhereInput = {
@@ -61,26 +62,28 @@ builder.objectField(ProgramMutations, 'update', (t) =>
         startDate: data.startDate ?? undefined,
         endDate: data.endDate ?? undefined,
       })
-      const responsible = await new UserModel(db).findUniqueOrThrow(
-        program.responsibleUid,
-      )
+      const [responsible, projectsDB] = await Promise.all([
+        new UserModel(db).findUniqueOrThrow(program.responsibleUid),
+        new ProjectModel(db).findMany({
+          where: { programUid: program.uid },
+        }),
+      ])
       const person = await new PersonModel(db).findUniqueOrThrow(
         responsible.personUid,
       )
+      const projects = projectsDB.map((project) => ({
+        ...project,
+        programId: project.programUid,
+        responsibleId: project.responsibleUid,
+        id: project.uid,
+        goals: project.goals.map((goal) => ({ ...goal, id: goal.uid })),
+      })) satisfies TProject[]
       return {
         ...program,
         id: program.uid,
         responsibleId: program.responsibleUid,
         responsible: { ...responsible, ...person, id: responsible.uid },
-        projects: (
-          await new ProjectModel(db).findMany({
-            where: { programUid: program.uid },
-          })
-        ).map((project) => ({
-          ...project,
-          id: project.uid,
-          goals: project.goals.map((goal) => ({ ...goal, id: goal.uid })),
-        })),
+        projects,
       }
     },
   }),

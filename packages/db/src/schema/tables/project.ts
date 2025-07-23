@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm'
+import { sql } from 'drizzle-orm'
 import {
   boolean,
   date,
@@ -9,8 +9,8 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { User } from './user'
 import { Program } from './program'
+import { User } from './user'
 
 export const projectStatusEnum = pgEnum('ProjectStatus', [
   'pending',
@@ -30,10 +30,12 @@ export const Project = pgTable('Project', {
   status: projectStatusEnum().notNull().default('pending'),
   startDate: date({ mode: 'date' }),
   endDate: date({ mode: 'date' }),
-  responsible: varchar()
+  responsibleUid: varchar()
     .references(() => User.uid)
     .notNull(),
-  programUid: varchar().references(() => Program.uid),
+  programUid: varchar()
+    .references(() => Program.uid)
+    .notNull(),
   createdBy: varchar()
     .references(() => User.uid)
     .notNull(),
