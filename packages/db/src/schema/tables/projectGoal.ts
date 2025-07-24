@@ -11,7 +11,7 @@ import {
 import { Project } from './project'
 import { User } from './user'
 
-export const projectGoalStatus = pgEnum('ProjectGoalStatus', [
+export const projectGoalStatusEnum = pgEnum('ProjectGoalStatus', [
   'pending',
   'in_progress',
   'done',
@@ -28,7 +28,7 @@ export const ProjectGoal = pgTable('ProjectGoal', {
   projectUid: varchar()
     .references(() => Project.uid)
     .notNull(),
-  status: projectGoalStatus().notNull().default('pending'),
+  status: projectGoalStatusEnum().notNull().default('pending'),
   startDate: date({ mode: 'date' }),
   endDate: date({ mode: 'date' }),
   createdBy: varchar()

@@ -54,6 +54,7 @@ builder.objectField(ProgramQueries, 'one', (t) =>
           goals: project.goals.map((goal) => ({
             ...pick(goal, ['name', 'active', 'status', 'startDate', 'endDate']),
             id: goal.uid,
+            projectId: project.uid,
           })),
         })),
       }

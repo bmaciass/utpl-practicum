@@ -7,10 +7,10 @@ import { useGetProject } from "~/hooks/project/useGetProject";
 
 export default function Index () {
   const params = useParams()
-  const id = params.id as string
+  const projectId = params.projectId as string
   const programId = params.programId as string
 
-  const { error, loading, project } = useGetProject(id)
+  const { error, loading, project } = useGetProject(projectId)
   return (
     <>
       {error && <Alert variant="error" description={error.message} />}
@@ -20,7 +20,7 @@ export default function Index () {
           <ProjectForm project={project} />
         </div>
         <div className="flex gap-2">
-          <Link to={`/programs/${programId}/projects/${id}/goals`}>
+          <Link to={`/programs/${programId}/projects/${projectId}/goals`}>
             <Button type="button" variant={'secondary'}>Ver Metas</Button>
           </Link>
         </div>

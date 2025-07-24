@@ -83,7 +83,7 @@ export class ProjectGoalModel {
         | 'endDate'
         | 'status'
         | 'projectUid'
-        | 'createdBy'
+        | 'updatedBy'
         | 'active'
       >
     >,

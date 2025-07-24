@@ -76,7 +76,11 @@ builder.objectField(ProgramMutations, 'update', (t) =>
         programId: project.programUid,
         responsibleId: project.responsibleUid,
         id: project.uid,
-        goals: project.goals.map((goal) => ({ ...goal, id: goal.uid })),
+        goals: project.goals.map((goal) => ({
+          ...goal,
+          projectId: project.uid,
+          id: goal.uid,
+        })),
       })) satisfies TProject[]
       return {
         ...program,

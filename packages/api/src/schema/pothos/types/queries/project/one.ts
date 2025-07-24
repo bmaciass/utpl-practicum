@@ -41,6 +41,7 @@ builder.objectField(ProjectQueries, 'one', (t) =>
         goals: project.goals.map((goal) => ({
           ...pick(goal, ['active', 'name', 'startDate', 'endDate', 'status']),
           id: goal.uid,
+          projectId: project.uid,
         })),
       } satisfies TProject
     },

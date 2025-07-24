@@ -1,14 +1,15 @@
-import type { ProjectPayload } from '@sigep/db'
+import type { ProjectRecord } from '@sigep/db'
 import { PersonModel } from '~/models/Person'
 import { ProjectModel } from '~/models/Project'
 import { UserModel } from '~/models/User'
 import builder from '../../../builder'
+import { ProjectStatusEnum } from '../../enums/ProjectStatus'
 import { Project } from '../../objects/Project'
 import { ProjectMutations } from './root'
 
 type TCreateProjectDataInput = Pick<
-  ProjectPayload,
-  'name' | 'description' | 'startDate' | 'endDate'
+  ProjectRecord,
+  'name' | 'description' | 'startDate' | 'endDate' | 'status'
 > & {
   programId: string
   responsibleId: string
@@ -20,6 +21,7 @@ export const CreateProjectDataInput = builder
     fields: (t) => ({
       name: t.string(),
       description: t.string(),
+      status: t.field({ type: ProjectStatusEnum }),
       startDate: t.field({ type: 'Date', required: false }),
       endDate: t.field({ type: 'Date', required: false }),
       responsibleId: t.string(),

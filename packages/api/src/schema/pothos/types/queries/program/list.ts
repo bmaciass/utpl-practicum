@@ -74,6 +74,7 @@ builder.objectField(ProgramQueries, 'list', (t) =>
                 'endDate',
               ]),
               id: goal.uid,
+              projectId: project.uid,
             })),
           })),
         })),

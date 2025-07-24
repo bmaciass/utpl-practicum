@@ -80,7 +80,11 @@ builder.objectField(ProjectMutations, 'update', (t) =>
         responsibleId: project.responsibleUid,
         programId: project.programUid,
         responsible: { ...responsible, ...person, id: responsible.uid },
-        goals: goals.map((goal) => ({ ...goal, id: goal.uid })),
+        goals: goals.map((goal) => ({
+          ...goal,
+          projectId: project.uid,
+          id: goal.uid,
+        })),
       }
     },
   }),

@@ -1,22 +1,22 @@
 import { Link, Outlet, useParams } from "@remix-run/react"
 import { isEmpty } from "lodash-es"
 import { Alert } from "~/components/globals/Alert"
-import { ProjectList } from "~/components/pages/project/ProjectList"
+import { ProjectGoalList } from "~/components/pages/projectGoal/ProjectGoalList"
 import { Title } from "~/components/typography/Headers"
 import { Paragraph } from "~/components/typography/Paragraph"
 import { Button } from "~/components/ui/button"
 import { Skeleton } from "~/components/ui/skeleton"
 import { withAuth } from "~/helpers/withAuth"
-import { useProjectList } from "~/hooks/project/useProjectList"
+import { useProjectGoalList } from "~/hooks/projectGoal/useProjectGoalList"
 import { ClientOnly } from "~/utils/ClientOnly"
 
 export const loader = withAuth()
 
-const ProjectsSection = () => {
-  const { programId } = useParams()
+const ProjectGoalsSection = () => {
+  const params = useParams()
+  const projectId = params.projectId as string
 
-  // biome-ignore lint/style/noNonNullAssertion: this comes from the file so it is not null
-  const { projects, error, loading } = useProjectList(programId!)
+  const { projectGoals, error, loading } = useProjectGoalList(projectId)
   if (loading) {
     return <Skeleton className="h-full w-full" />
   }
@@ -25,19 +25,21 @@ const ProjectsSection = () => {
     return <Alert variant="error" description={`Error cargando Proyectos. Error: ${error.message}`} />
   }
 
-  if (isEmpty(projects)) {
+  if (isEmpty(projectGoals)) {
     return <Paragraph>No hay proyectos creados</Paragraph>
   }
 
   return (
     <div className="py-4">
-      <ProjectList list={projects} />
+      <ProjectGoalList list={projectGoals} />
     </div>
   )
 }
 
-const ProjectsPage = () => {
-  const { programId } = useParams()
+const ProjectGoalsPage = () => {
+  const params = useParams()
+  const programId = params.programId as string
+  const projectId = params.projectId as string
   return (
     <div className="grid grid-cols-6 gap-4">
       <div className="col-span-3 col-start-1 p-4">
@@ -46,12 +48,12 @@ const ProjectsPage = () => {
             <Title variant="h4">Proyectos</Title>
           </div>
           <div className="flex-none">
-            <Link to={`/programs/${programId}/projects/new`}>
+            <Link to={`/programs/${programId}/projects/${projectId}/goals/new`}>
               <Button>Nuevo</Button>
             </Link>
           </div>
         </div>
-        <ProjectsSection />
+        <ProjectGoalsSection />
       </div>
       <div className="col-span-3 col-start-4 p-4">
         <Outlet />
@@ -62,6 +64,6 @@ const ProjectsPage = () => {
 
 export default function Index () {
   return (
-    <ClientOnly>{() => <ProjectsPage />}</ClientOnly>
+    <ClientOnly>{() => <ProjectGoalsPage />}</ClientOnly>
   )
 }
